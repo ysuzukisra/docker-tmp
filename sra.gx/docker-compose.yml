@@ -1,0 +1,36 @@
+version: '2'
+
+volumes:
+  app-volume:
+    external: false
+  db-volume:
+    external: false
+
+services:
+
+  rproxy:
+    image: jwilder/nginx-proxy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  mysql.sra.gx:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=sra1234
+      - MYSQL_DATABASE=redmine
+    volumes:
+      - db-volume:/var/lib/mysql
+
+  redmine.sra.gx:
+    image: redmine:3.0.0
+    environment:
+      - VIRTUAL_HOST=redmine.sra.gx
+      - REDMINE_DB_MYSQL=mysql.sra.gx
+      - REDMINE_DB_PASSWORD=sra1234
+    volumes:
+      - app-volume:/usr/src/redmine/files
+    depends_on:
+      - mysql.sra.gx
