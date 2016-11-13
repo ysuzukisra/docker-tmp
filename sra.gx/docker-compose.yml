@@ -38,6 +38,7 @@ services:
     depends_on:
       - mysql.sra.gx
 
+# ※ mysql.sra.gx で mymysql で自動化したため、下記は不要
 # mysql
 #   docker-compose exec mysql.sra.gx bash
 #   add 'character-set-server=utf8' to /etc/mysql/mysql.conf.d/mysqld.cnf
