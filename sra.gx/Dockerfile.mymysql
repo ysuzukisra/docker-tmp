@@ -1,0 +1,10 @@
+FROM mysql
+
+RUN \
+    echo 'character-set-server=utf8' >> /etc/mysql/mysql.conf.d/mysqld.cnf	\
+    && echo done.
+
+EXPOSE 3306
+
+CMD [ "mysqld" ]
+ENTRYPOINT [ "docker-entrypoint.sh" ]
