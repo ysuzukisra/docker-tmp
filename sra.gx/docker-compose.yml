@@ -34,3 +34,13 @@ services:
       - app-volume:/usr/src/redmine/files
     depends_on:
       - mysql.sra.gx
+
+# mysql
+#   docker-compose exec mysql.sra.gx bash
+#   add 'character-set-server=utf8' to /etc/mysql/mysql.conf.d/mysqld.cnf
+#   docker-compose restart mysql.sra.gx
+# redmine
+#   docker-compose exec redmine.sra.gx bash
+#   rake db:drop
+#   rake db:create
+#   rake db:migrate
