@@ -5,6 +5,8 @@ volumes:
     external: false
   db-volume:
     external: false
+  apt-volume:
+    external: false
 
 services:
 
@@ -37,6 +39,16 @@ services:
       - app-volume:/usr/src/redmine/files
     depends_on:
       - mysql.sra.gx
+
+  apt.sra.gx:
+    image: sameersbn/apt-cacher-ng:latest
+    volumes:
+      - apt-volume:/var/cache/apt-cacher-ng
+    environment:
+      - VIRTUAL_HOST=apt.sra.gx
+
+  test:
+    image: debian
 
 # ※ mysql.sra.gx で mymysql で自動化したため、下記は不要
 # mysql
