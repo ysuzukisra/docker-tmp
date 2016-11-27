@@ -30,7 +30,9 @@ services:
       - db-volume:/var/lib/mysql
 
   redmine.sra.gx:
-    image: redmine:3.0.0
+    build:
+      context: ./redmine300
+    image: redmine.sra.gx:3.0.0
     environment:
       - VIRTUAL_HOST=redmine.sra.gx
       - REDMINE_DB_MYSQL=mysql.sra.gx
@@ -40,12 +42,16 @@ services:
     depends_on:
       - mysql.sra.gx
 
-  apt.sra.gx:
-    image: sameersbn/apt-cacher-ng:latest
+  apt-cacher:
+    build:
+      context: .
+      dockerfile: Dockerfile.apt-cacher
+    image: apt-cacher
     volumes:
       - apt-volume:/var/cache/apt-cacher-ng
     environment:
       - VIRTUAL_HOST=apt.sra.gx
+      - VIRTUAL_PORT="80"
 
   test:
     image: debian
